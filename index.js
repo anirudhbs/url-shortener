@@ -19,19 +19,11 @@ app.post('/shorten', (req, res) => {
   res.send({ shortCode, inputURL })
 })
 
-function callbackFunction() {
-  console.log('in callback')
-}
-
-function getOriginalURL(url) {
-  const originalURL = db.getURL(url, callbackFunction)
-  console.log(`main method ${originalURL}`)
-  return originalURL
-}
-
 app.get('/:hash', (req, res) => {
-  const originalURL = getOriginalURL(req.path.slice(1))
-  res.send({ originalURL })
+  const hash = req.path.slice(1)
+  db.getURL(hash, (originalURL) => {
+    res.send({ originalURL })
+  })
 })
 
 app.listen(3000, () =>

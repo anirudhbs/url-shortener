@@ -9,14 +9,11 @@ function storeURL(inputURL, shortCode) {
   client.set(shortCode, inputURL, redis.print)
 }
 
-function getURL(hash) {
-  let originalURL = '/'
+function getURL(hash, cb) {
   client.get(hash, (err, reply) => {
-    originalURL = reply
-    console.log(`geturl ${originalURL}`)
-    return originalURL
+    // error handling
+    cb(reply)
   })
-  return originalURL
 }
 
 
