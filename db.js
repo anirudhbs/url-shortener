@@ -10,7 +10,7 @@ function storeURL(inputURL, shortCode) {
 }
 
 function getURL(hash) {
-  let originalURL
+  let originalURL = '/'
   client.get(hash, (err, reply) => {
     originalURL = reply
     console.log(`geturl ${originalURL}`)
@@ -18,6 +18,7 @@ function getURL(hash) {
   })
   return originalURL
 }
+
 
 module.exports = {
   storeURL,
