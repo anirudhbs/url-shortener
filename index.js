@@ -12,7 +12,7 @@ app.use(bodyParser.urlencoded({ extended: true }))
 app.get('/', (req, res) =>
   res.send('Hello world'))
 
-app.post('/shorten', (req, res) => {
+app.post('/shortenURL', (req, res) => {
   const inputURL = req.body.url
   const shortCode = utils.getShortCode()
   db.storeURL(inputURL, shortCode)
@@ -22,7 +22,8 @@ app.post('/shorten', (req, res) => {
 app.get('/:hash', (req, res) => {
   const hash = req.path.slice(1)
   db.getURL(hash, (originalURL) => {
-    res.send({ originalURL })
+    // res.send({ originalURL })
+    res.redirect(originalURL)
   })
 })
 

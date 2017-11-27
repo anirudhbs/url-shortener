@@ -12,6 +12,7 @@ function storeURL(inputURL, shortCode) {
 function getURL(hash, cb) {
   client.get(hash, (err, reply) => {
     // error handling
+    if (reply === null) cb('https://niceme.me/')
     cb(reply)
   })
 }
