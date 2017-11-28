@@ -20,12 +20,12 @@ app.post('/shortenUrl', (req, res) => {
 })
 
 app.get('/:hash', (req, res) => {
-  const hash = req.path.slice(1)
+  const { hash } = req.params
 
   db.getURL(hash, (originalURL) => {
-    res.redirect(originalURL)
+    res.redirect(307, originalURL)
   })
 })
 
-app.listen(3000, () =>
-  console.log('listening on port 3000'))
+app.listen(8080, () =>
+  console.log('listening on port 8080'))
