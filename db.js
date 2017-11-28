@@ -10,10 +10,6 @@ function storeURL(inputURL, shortCode) {
 }
 
 function getURL(hash, cb) {
-  // client.on('error', (err) => {
-  //   console.log(`Error: ${err}`)
-  //   cb('https://www.google.co.in')
-  // })
   client.get(hash, (err, reply) => {
     // pending - error handling
     if (err) cb('https://www.google.co.in')
