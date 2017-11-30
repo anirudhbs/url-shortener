@@ -11,10 +11,11 @@ function storeURL(inputURL, shortCode) {
 
 function getURL(hash, cb) {
   client.get(hash, (err, reply) => {
-    // pending - error handling
-    if (err) cb('https://www.google.co.in')
-    if (reply === null) cb('https://www.google.co.in')
-    cb(reply)
+    if (err || reply === null) {
+      cb(new Error('Key not found'))
+    } else {
+      cb(null, reply)
+    }
   })
 }
 
