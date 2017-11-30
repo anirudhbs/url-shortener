@@ -1,16 +1,13 @@
 const console = require('console')
 const express = require('express')
 const bodyParser = require('body-parser')
-const path = require('path')
 const db = require('./db')
 
 const app = express()
+const PORT = 8080
 
 app.use(express.static('public'))
 app.use(bodyParser.json())
-app.use(bodyParser.urlencoded({ extended: true }))
-
-app.get('/', (req, res) => res.sendFile(path.join(__dirname, '/index.html')))
 
 app.get('/:hash', (req, res) => {
   const { hash } = req.params
@@ -34,5 +31,9 @@ app.post('/shortenUrl', (req, res) => {
   })
 })
 
-app.listen(8080, () =>
-  console.log('listening on port 8080'))
+app.post('/dostuff', (req, res) => {
+  console.log('req', req.body)
+})
+
+app.listen(PORT, () =>
+  console.log(`listening on port ${PORT}`))
