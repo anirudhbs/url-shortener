@@ -1,7 +1,6 @@
 const console = require('console')
 const express = require('express')
 const bodyParser = require('body-parser')
-const utils = require('./utils')
 const db = require('./db')
 const path = require('path')
 
@@ -25,9 +24,9 @@ app.get('/:hash', (req, res) => {
 
 app.post('/shortenUrl', (req, res) => {
   const inputURL = req.body.url
-  const shortCode = utils.getShortCode(inputURL)
-  db.storeURL(inputURL, shortCode)
-  res.send({ shortCode, inputURL })
+  db.storeURL(inputURL, (hash, url) => {
+    res.send({ hash, url })
+  })
 })
 
 app.listen(8080, () =>

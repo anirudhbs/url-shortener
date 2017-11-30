@@ -1,12 +1,19 @@
 const console = require('console')
 const redis = require('redis')
+const utils = require('./utils')
 
 const client = redis.createClient()
 
 client.on('error', (err) => { console.log(`Error ${err}`) })
 
-function storeURL(inputURL, shortCode) {
-  client.set(shortCode, inputURL, redis.print)
+function storeURL(url, cb) {
+  let hash = null
+  while (true) {
+    hash = utils.getShortCode()
+    if (client.exists(hash, redis.print)) break
+  }
+  client.set(hash, url, redis.print)
+  cb(hash, url)
 }
 
 function getURL(hash, cb) {
