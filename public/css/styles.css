@@ -1,0 +1,14 @@
+body {
+  font-family: Helvetica;
+  margin: auto;
+  width: 50%;
+  padding: 10px;
+}
+
+.fixed-header {
+  width: 100%;
+  color: #000000;
+  background: #d9d9d9;
+  padding: 10px;
+  text-align: center;
+}
