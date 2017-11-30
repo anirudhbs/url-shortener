@@ -4,6 +4,7 @@
   <meta charset='UTF-8'>
   <title>URL Shortener</title>
   <link rel='stylesheet' type='text/css' href='css/styles.css'>
+  <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
 </head>
 
 <body>
@@ -12,25 +13,11 @@
   </div>
   <div class="form">
     <input type='text' id='url' name='url' placeholder="Enter URL here" size="50"/><br/>
-    <button onclick='getShortUrl()'>OK</button>
+    <button onclick='getShortUrl()'>SHORTEN</button>
   </div>
   <div id='display-hash' class="form"></div>
 </body>
 
-<script>
-  function getShortUrl() {
-    const url = document.getElementById('url').value
-    const xhr = new XMLHttpRequest()
-    xhr.onreadystatechange = function () {
-      if (this.readyState === 4 && this.status === 200) {
-        const response = JSON.parse(this.responseText)
-        document.getElementById('display-hash').innerHTML = window.location.href.slice(7) + response.hash
-      }
-    }
-    xhr.open('POST', 'shortenUrl', true)
-    xhr.setRequestHeader('Content-Type', 'application/json; charset=utf-8')
-    xhr.send(JSON.stringify({ url }))
-  }
-</script>
+<script src="js/index.js"></script>
 
 </html>

@@ -4,9 +4,11 @@ const utils = require('./utils')
 
 const client = redis.createClient()
 
-client.on('error', (err) => { console.log(`Error ${err}`) })
+client.on('error', (err) => {
+  console.log(`Error ${err}`)
+})
 
-function storeURL(url, cb) {
+function storeUrl (url, cb) {
   const hash = utils.getShortCode()
   client.set(hash, url, (err) => {
     if (err) cb(new Error('Unable to store'))
@@ -14,9 +16,9 @@ function storeURL(url, cb) {
   })
 }
 
-function getURL(hash, cb) {
+function getUrl (hash, cb) {
   client.get(hash, (err, reply) => {
-    if (err || reply === null) {
+    if (err || (reply === null)) {
       cb(new Error('Key not found'))
     } else {
       cb(null, reply)
@@ -25,6 +27,6 @@ function getURL(hash, cb) {
 }
 
 module.exports = {
-  storeURL,
-  getURL,
+  storeUrl,
+  getUrl
 }

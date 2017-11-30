@@ -1,47 +1,45 @@
 const console = require('console')
 const express = require('express')
 const bodyParser = require('body-parser')
-const db = require('./db')
+
+const { getUrl, storeUrl } = require('./models')
 
 const app = express()
 const PORT = 8080
 
 app.use(express.static('public'))
 app.use(bodyParser.json())
-// app.use(bodyParser.urlencoded({ extended: true }))
 
 app.get('/:hash', (req, res) => {
   const { hash } = req.params
-  db.getURL(hash, (err, url) => {
+  getUrl(hash, (err, url) => {
     if (err) {
-      res.sendStatus(404)
+      res.status(404).json({
+        error: 'Unable to redirect'
+      })
     } else {
-      res.redirect(307, url)
+      res.status(307).redirect(url)
     }
   })
 })
 
-app.post('/shortenUrl', (req, res) => {
-  const inputUrl = req.body.url
-  db.storeURL(inputUrl, (err, hash, url) => {
+app.post('/shorten', (req, res) => {
+  const { url } = req.body
+  storeUrl(url, (err, hash, _url) => {
     if (err) {
-      // error handling
+      // todo: add error handling
+      res.status(500).send({
+        error: 'Unable to shorten URL'
+      })
     } else {
-      res.json({ hash, url })
+      res.json({ status: 'success',
+        hash,
+        _url
+      })
     }
   })
 })
 
-app.post('/dostuff', (req, res) => {
-  const inputUrl = req.body.url
-  db.storeURL(inputUrl, (err, hash, url) => {
-    if (err) {
-      // error handling
-    } else {
-      res.json({ hash, url })
-    }
-  })
+app.listen(PORT, () => {
+  console.log(`listening on port ${PORT}`)
 })
-
-app.listen(PORT, () =>
-  console.log(`listening on port ${PORT}`))
