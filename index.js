@@ -8,6 +8,7 @@ const PORT = 8080
 
 app.use(express.static('public'))
 app.use(bodyParser.json())
+// app.use(bodyParser.urlencoded({ extended: true }))
 
 app.get('/:hash', (req, res) => {
   const { hash } = req.params
@@ -21,18 +22,25 @@ app.get('/:hash', (req, res) => {
 })
 
 app.post('/shortenUrl', (req, res) => {
-  const inputURL = req.body.url
-  db.storeURL(inputURL, (err, hash, url) => {
+  const inputUrl = req.body.url
+  db.storeURL(inputUrl, (err, hash, url) => {
     if (err) {
       // error handling
     } else {
-      res.send({ hash, url })
+      res.json({ hash, url })
     }
   })
 })
 
 app.post('/dostuff', (req, res) => {
-  console.log('req', req.body)
+  const inputUrl = req.body.url
+  db.storeURL(inputUrl, (err, hash, url) => {
+    if (err) {
+      // error handling
+    } else {
+      res.json({ hash, url })
+    }
+  })
 })
 
 app.listen(PORT, () =>

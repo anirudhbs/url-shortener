@@ -1,43 +1,35 @@
-<html lang="en">
+<html lang='en'>
 
 <head>
-  <meta charset="UTF-8">
+  <meta charset='UTF-8'>
   <title>URL Shortener</title>
-  <link rel="stylesheet" type="text/css" href="css/styles.css">
-  <!-- <link rel="icon" href="favicon.ico" type="image/x-icon"/>   -->
-  <!-- <link rel="shortcut icon" type="image/png" href="/favicon.png"/>   -->
+  <link rel='stylesheet' type='text/css' href='css/styles.css'>
 </head>
 
 <body>
-  <div class="fixed-header">
+  <div class='fixed-header'>
     <h2>URL Shortener</h2>
   </div>
   <div class="form">
-        <input id="url" type="text" name="url">
-    <button type="button" onclick="placeholder()">do stuff</button>
+    <input type='text' id='url' name='url' />
+    <button onclick='getShortUrl()'>OK</button>
   </div>
-  <div id="demo">
-    ping
-  </div>
+  <div id='display-hash' class="form"></div>
 </body>
 
 <script>
-  function placeholder() {
-    console.log('in script')
-
+  function getShortUrl() {
+    const url = document.getElementById('url').value
     const xhr = new XMLHttpRequest()
     xhr.onreadystatechange = function () {
-      if (this.readyState == 4 && this.status == 200) {
-        document.getElementById("demo").innerHTML = this.responseText
+      if (this.readyState === 4 && this.status === 200) {
+        const response = JSON.parse(this.responseText)
+        document.getElementById('display-hash').innerHTML = `${response.hash}`
       }
     }
-    xhr.open("POST", "dostuff", true)
+    xhr.open('POST', 'shortenUrl', true)
     xhr.setRequestHeader('Content-Type', 'application/json; charset=utf-8')
-    const data = {
-      a: 'b'
-    }
-    xhr.send(JSON.stringify(data))
-    document.getElementById("demo").innerHTML = "lmao"
+    xhr.send(JSON.stringify({ url }))
   }
 </script>
 
