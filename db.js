@@ -7,13 +7,15 @@ const client = redis.createClient()
 client.on('error', (err) => { console.log(`Error ${err}`) })
 
 function storeURL(url, cb) {
-  let hash = null
+  let hash = ''
   while (true) {
     hash = utils.getShortCode()
-    if (client.exists(hash, redis.print)) break
+    if (client.exists(hash)) break
   }
-  client.set(hash, url, redis.print)
-  cb(hash, url)
+  client.set(hash, url, (err, reply) => {
+    if (err) cb(new Error('Unable to store'))
+    else cb(null, hash, url) 
+  })
 }
 
 function getURL(hash, cb) {

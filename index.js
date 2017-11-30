@@ -1,8 +1,8 @@
 const console = require('console')
 const express = require('express')
 const bodyParser = require('body-parser')
-const db = require('./db')
 const path = require('path')
+const db = require('./db')
 
 const app = express()
 
@@ -24,8 +24,12 @@ app.get('/:hash', (req, res) => {
 
 app.post('/shortenUrl', (req, res) => {
   const inputURL = req.body.url
-  db.storeURL(inputURL, (hash, url) => {
-    res.send({ hash, url })
+  db.storeURL(inputURL, (err, hash, url) => {
+    if (err) {
+      // error handling
+    } else {
+      res.send({ hash, url })
+    }
   })
 })
 
