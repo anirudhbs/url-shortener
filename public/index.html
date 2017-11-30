@@ -11,7 +11,7 @@
     <h2>URL Shortener</h2>
   </div>
   <div class="form">
-    <input type='text' id='url' name='url' />
+    <input type='text' id='url' name='url' placeholder="Enter URL here" size="50"/><br/>
     <button onclick='getShortUrl()'>OK</button>
   </div>
   <div id='display-hash' class="form"></div>
@@ -24,7 +24,7 @@
     xhr.onreadystatechange = function () {
       if (this.readyState === 4 && this.status === 200) {
         const response = JSON.parse(this.responseText)
-        document.getElementById('display-hash').innerHTML = `${response.hash}`
+        document.getElementById('display-hash').innerHTML = window.location.href.slice(7) + response.hash
       }
     }
     xhr.open('POST', 'shortenUrl', true)
