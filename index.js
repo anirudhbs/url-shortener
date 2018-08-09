@@ -18,7 +18,8 @@ app.get('/:hash', (req, res) => {
         error: 'Unable to redirect'
       })
     } else {
-      res.status(307).redirect(url)
+      link = url.includes('https') ? url : url.includes('http') ? url : `http://${url}`
+      res.status(307).redirect(link)
     }
   })
 })
